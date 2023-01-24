@@ -1,4 +1,28 @@
+/** Core game function */
+export function playGame(gamePhase, setGamePhase) {
+    /** set game state "new game" */
+    const turn = "bop"
+    /** draw cards for player and dealer */
+    if (gamePhase === "start") {
+        draw("player", 2)
+        draw("dealer", 2)
+        setGamePhase("player")
+        console.log("Gamephase change")
+    }
 
+
+    /** update game state to player stick or twist */
+
+    /** stick  */
+
+}
+
+/** New game deck setup function */
+
+export function stick(setGamePhase) {
+    console.log("player sticks")
+    setGamePhase("dealer")
+}
 
 export function shuffleNewDeck() {
     const deck = []
@@ -14,6 +38,11 @@ export function shuffleNewDeck() {
     fisherYatesShuffle(deck);
 }
 
+
+/** generic functions */
+
+/** fisherYatesShuffle  */
+
 function fisherYatesShuffle(deck) {
     for (let i = deck.length -1; i > 0; i--){
         const randomCard = Math.floor(Math.random()*(i+1));
@@ -21,19 +50,33 @@ function fisherYatesShuffle(deck) {
         deck[i] = deck[randomCard];
         deck[randomCard] = temp
     }
-
-
 }
 
-export function playGame() {
-    /** set game state "new game" */
-    turn 
-    /** draw cards for player and dealer */
-    draw(player, 2)
-    draw(dealer, 2)
+/** Draw a number of cards 'drawer = dealer/player' */
 
-    /** update game state to player stick or twist */
+export function draw(drawer, number) {
+    // console.log(`Drawing ${number} cards for ${drawer}`)
+}
 
-    /** stick  */
 
+/** count the value of the cards in the player or dealer hand*/
+export function sumScore(cards) {
+    let totalScore = 0
+    if (cards.length === 0) {
+        return 0
+    }
+    cards.forEach((card) => {
+        let cardValue = card.match(/(\d+)/)
+        console.log(cardValue)
+        if (cardValue) {
+            console.log("found a number card")
+            totalScore = totalScore + parseInt(cardValue[0])
+        }
+        else {
+            console.log("found a face card")
+            totalScore = totalScore + 10
+            console.log(totalScore)
+        }
+    })
+    return (totalScore)
 }

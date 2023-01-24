@@ -1,13 +1,14 @@
 import { useState } from "react"
-import { shuffleNewDeck, playGame } from '../events/gameEvents'
+import { shuffleNewDeck, playGame, stick, draw, sumScore } from '../events/gameEvents'
 
 export default function GameBoard() {
     const [deck, setDeck] = useState(shuffleNewDeck)
-    const [playerCards, setPlayerCards] = useState([])
+    const [playerCards, setPlayerCards] = useState(["7 of Clubs", "Queen"])
     const [dealerCards, setDealerCards] = useState([])
-    const [gamePhase, setGamePhase] = useState(["player"])
+    const [gamePhase, setGamePhase] = useState("start")
 
-    playGame()
+
+    playGame(gamePhase, setGamePhase)
     return (
         <div className="game-board">
             <div className="dealer-hand">
@@ -15,17 +16,25 @@ export default function GameBoard() {
             </div>
             <div className="player-hand">
                 {playerCards}
+                <div className="player-score">
+                    <p>player score is {sumScore(playerCards)}</p>
+                </div>
             </div>
             {gamePhase === "player" 
             ? 
             <div className="player-choices">
-                <button className="stick"></button>
-                <button className="twist"></button>
+                <button className="stick" onClick={() => stick(setGamePhase)}>Stick</button>
+                <button className="twist" onClick={() => draw("player", 1)}>Twist</button>
             </div>
             :
-            <div className="dealer-choices">
-                <p>dealer choices</p>
-            </div>
+            <>
+                <div className="player-score">
+                    <p>Player score is {sumScore(playerCards)}</p>
+                </div>
+                <div className="dealer-choices">
+                    <p>dealer choices</p>
+                </div>
+            </>
             }
         </div>
     )
