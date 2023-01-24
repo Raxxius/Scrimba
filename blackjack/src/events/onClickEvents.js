@@ -1,7 +1,7 @@
 
 
 export function newGame(gameState, setGameState) {
-    setGameState(!gameState); 
+    setGameState(true); 
   }
 
 
