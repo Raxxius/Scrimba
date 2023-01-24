@@ -62,14 +62,13 @@ export function draw(drawer, number) {
 /** count the value of the cards in the player or dealer hand*/
 export function sumScore(cards) {
     let totalScore = 0
+    let aces = 0
     if (cards.length === 0) {
         return 0
     }
     cards.forEach((card) => {
         let cardValue = card.match(/(\d+)/)
-        console.log(cardValue)
         if (cardValue) {
-            console.log("found a number card")
             totalScore = totalScore + parseInt(cardValue[0])
         }
         else {
@@ -77,7 +76,26 @@ export function sumScore(cards) {
             if (firstWord !== "Ace") {
                 totalScore = totalScore +10
             }
-    }
+            else aces++
+        }
     })
-    return (totalScore)
+    console.log(aces)
+    let aceScore = aces*11
+    while (aces != 0) {
+        if (aceScore + totalScore <= 21) {
+            aces = 0
+            console.log("below 21")
+        }
+        else { 
+            aceScore = aceScore - 10
+            console.log(aceScore)
+            aces--
+            console.log("reduced an ace to 1, aces at "+aces)
+        }
+    }
+    console.log(aceScore)
+    const finalScore = totalScore + aceScore
+
+
+    return (finalScore)
 }
