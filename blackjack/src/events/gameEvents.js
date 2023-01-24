@@ -73,10 +73,11 @@ export function sumScore(cards) {
             totalScore = totalScore + parseInt(cardValue[0])
         }
         else {
-            console.log("found a face card")
-            totalScore = totalScore + 10
-            console.log(totalScore)
-        }
+            const firstWord = card.replace(/ .*/,'');
+            if (firstWord !== "Ace") {
+                totalScore = totalScore +10
+            }
+    }
     })
     return (totalScore)
 }
