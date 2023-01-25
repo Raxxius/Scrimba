@@ -8,7 +8,6 @@ function App() {
   const [gameState, setGameState] = useState(false)
 
   const onClickNewGame = () => {
-    console.log("New Game clicked")
     newGame(gameState, setGameState)
   }
 

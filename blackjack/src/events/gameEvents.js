@@ -1,13 +1,10 @@
 /** Core game function */
 export function playGame(gamePhase, setGamePhase) {
     /** set game state "new game" */
-    const turn = "bop"
+    console.log("render")
     /** draw cards for player and dealer */
     if (gamePhase === "start") {
-        draw("player", 2)
-        draw("dealer", 2)
         setGamePhase("player")
-        console.log("Gamephase change")
     }
 
 
@@ -20,7 +17,6 @@ export function playGame(gamePhase, setGamePhase) {
 /** New game deck setup function */
 
 export function stick(setGamePhase) {
-    console.log("player sticks")
     setGamePhase("dealer")
 }
 
@@ -31,11 +27,13 @@ export function shuffleNewDeck() {
 
     suit.forEach((suit) => {
         value.forEach((value) => {
-            deck.push(`the ${value} of ${suit}`)
+            deck.push(`${value} of ${suit}`)
         })     
     })
 
     fisherYatesShuffle(deck);
+
+    return deck
 }
 
 
@@ -52,15 +50,25 @@ function fisherYatesShuffle(deck) {
     }
 }
 
-/** Draw a number of cards 'drawer = dealer/player' */
+/** Draw a number of cards setHand = stateupdate */
 
-export function draw(drawer, number) {
-    // console.log(`Drawing ${number} cards for ${drawer}`)
+export function draw(deck, setDeck, setHand) {
+    setHand((prevArray) => {
+        const newArray = [...prevArray, deck.slice(-1)[0]]
+        return newArray
+    })
+
+    setDeck((prevDeck) => {
+        const newDeck = prevDeck.slice(0, -1)
+        return newDeck
+    })
+
 }
 
 
 /** count the value of the cards in the player or dealer hand*/
 export function sumScore(cards) {
+    console.log(cards)
     let totalScore = 0
     let aces = 0
     if (cards.length === 0) {
@@ -79,21 +87,16 @@ export function sumScore(cards) {
             else aces++
         }
     })
-    console.log(aces)
     let aceScore = aces*11
     while (aces != 0) {
         if (aceScore + totalScore <= 21) {
             aces = 0
-            console.log("below 21")
         }
         else { 
             aceScore = aceScore - 10
-            console.log(aceScore)
             aces--
-            console.log("reduced an ace to 1, aces at "+aces)
         }
     }
-    console.log(aceScore)
     const finalScore = totalScore + aceScore
 
 

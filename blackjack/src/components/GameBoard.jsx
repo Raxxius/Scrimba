@@ -3,10 +3,9 @@ import { shuffleNewDeck, playGame, stick, draw, sumScore } from '../events/gameE
 
 export default function GameBoard() {
     const [deck, setDeck] = useState(shuffleNewDeck)
-    const [playerCards, setPlayerCards] = useState(["7 of Clubs", "Ace of Hearts", "Ace of Spades"])
+    const [playerCards, setPlayerCards] = useState(['Ace of Spades'])
     const [dealerCards, setDealerCards] = useState([])
     const [gamePhase, setGamePhase] = useState("start")
-
 
     playGame(gamePhase, setGamePhase)
     return (
@@ -24,7 +23,7 @@ export default function GameBoard() {
             ? 
             <div className="player-choices">
                 <button className="stick" onClick={() => stick(setGamePhase)}>Stick</button>
-                <button className="twist" onClick={() => draw("player", 1)}>Twist</button>
+                <button className="twist" onClick={() => draw(deck, setDeck, setPlayerCards)}>Twist</button>
             </div>
             :
             <>
