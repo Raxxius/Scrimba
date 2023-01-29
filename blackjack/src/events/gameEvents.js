@@ -1,12 +1,20 @@
 /** Core game function */
-export function playGame(gamePhase, setGamePhase) {
+export function playGame(gamePhase, setGamePhase, deck, setDeck, playerCards, setPlayerCards, dealerCards, setDealerCards, blindCard, setBlindCard) {
     /** set game state "new game" */
-    console.log("render")
+
     /** draw cards for player and dealer */
     if (gamePhase === "start") {
+        draw(deck, setDeck, setPlayerCards)
+        draw(deck, setDeck, setDealerCards)
+        draw(deck, setDeck, setBlindCard)
         setGamePhase("player")
     }
-
+    if (gamePhase ==="dealer") {
+        setDealerCards((prevArray) => {
+            return [...prevArray, blindCard[0]]
+        })
+        setGamePhase("pause")
+    }
 
     /** update game state to player stick or twist */
 
@@ -50,6 +58,18 @@ function fisherYatesShuffle(deck) {
     }
 }
 
+function newhand(deck, setDeck, setPlayerCards, setDealerCards, setBlindCard) {
+    let newDeck = [...deck]
+    let playerCards = [newDeck.pop(), newDeck.pop()]
+    let dealerCards = newDeck.pop()
+    let blindCard = newDeck.pop()
+    setPlayerCards(playerCards)
+    setDealerCards(dealerCards)
+    setBlindCard(blindCard)
+    setDeck(newDeck)
+}
+
+
 /** Draw a number of cards setHand = stateupdate */
 
 export function draw(deck, setDeck, setHand) {
@@ -62,13 +82,12 @@ export function draw(deck, setDeck, setHand) {
         const newDeck = prevDeck.slice(0, -1)
         return newDeck
     })
-
 }
+
 
 
 /** count the value of the cards in the player or dealer hand*/
 export function sumScore(cards) {
-    console.log(cards)
     let totalScore = 0
     let aces = 0
     if (cards.length === 0) {

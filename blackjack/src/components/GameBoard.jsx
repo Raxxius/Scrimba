@@ -3,11 +3,12 @@ import { shuffleNewDeck, playGame, stick, draw, sumScore } from '../events/gameE
 
 export default function GameBoard() {
     const [deck, setDeck] = useState(shuffleNewDeck)
-    const [playerCards, setPlayerCards] = useState(['Ace of Spades'])
+    const [playerCards, setPlayerCards] = useState([])
     const [dealerCards, setDealerCards] = useState([])
+    const [blindCard, setBlindCard] = useState([])
     const [gamePhase, setGamePhase] = useState("start")
 
-    playGame(gamePhase, setGamePhase)
+    playGame(gamePhase, setGamePhase, deck, setDeck, playerCards, setPlayerCards, dealerCards, setDealerCards, blindCard, setBlindCard)
     return (
         <div className="game-board">
             <div className="dealer-hand">
@@ -15,9 +16,6 @@ export default function GameBoard() {
             </div>
             <div className="player-hand">
                 {playerCards}
-                <div className="player-score">
-                    <p>player score is {sumScore(playerCards)}</p>
-                </div>
             </div>
             {gamePhase === "player" 
             ? 
@@ -30,8 +28,8 @@ export default function GameBoard() {
                 <div className="player-score">
                     <p>Player score is {sumScore(playerCards)}</p>
                 </div>
-                <div className="dealer-choices">
-                    <p>dealer choices</p>
+                <div className="dealer-score">
+                    <p>dealer score is {sumScore(dealerCards)}</p>
                 </div>
             </>
             }
